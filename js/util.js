@@ -50,10 +50,10 @@ const getRandomArrayElement = function (array) {
 
 // Функция для проверки максимальной длины строки
 
-const isTextLength = function (string, maxLength) {
+const isTextLongEnough = function (string, maxLength) {
   return string.length > maxLength;
 };
 
-isTextLength('hello', 10);
+isTextLongEnough('hello', 10);
 
 export {getRandomPositiveNumber, getRandomArrayElement};

@@ -58,4 +58,6 @@ const getPhotoArray = function () {
   return array;
 };
 
-export {getPhotoArray};
+const data = getPhotoArray();
+
+export {data};
