@@ -1,4 +1,4 @@
-import {getPhotoArray} from './data.js';
+import {data} from './data.js';
 import './util.js';
 
-console.log(getPhotoArray());
+console.log(data);
