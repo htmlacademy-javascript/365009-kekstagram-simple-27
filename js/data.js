@@ -1,4 +1,4 @@
-import {getRandomPositiveNumber, getRandomArrayElement} from './util.js';
+import { getRandomPositiveNumber, getRandomArrayElement } from './util.js';
 
 const PHOTO_DESCRIPTION = [
   'Бастион',
@@ -60,4 +60,4 @@ const getPhotoArray = function () {
 
 const data = getPhotoArray();
 
-export {data};
+export { data };
