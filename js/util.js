@@ -56,4 +56,4 @@ const isTextLongEnough = function (string, maxLength) {
 
 isTextLongEnough('hello', 10);
 
-export {getRandomPositiveNumber, getRandomArrayElement};
+export { getRandomPositiveNumber, getRandomArrayElement };

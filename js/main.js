@@ -1,4 +1,2 @@
-import {data} from './data.js';
-import './util.js';
+import { usersPictures } from './users-pictures.js';
 
-console.log(data);
