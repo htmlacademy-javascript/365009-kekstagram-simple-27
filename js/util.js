@@ -56,4 +56,8 @@ const isTextLongEnough = function (string, maxLength) {
 
 isTextLongEnough('hello', 10);
 
-export { getRandomPositiveNumber, getRandomArrayElement };
+const isEscapeKey = function (evt) {
+  return evt.key === 'Escape';
+};
+
+export { getRandomPositiveNumber, getRandomArrayElement, isEscapeKey };

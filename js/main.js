@@ -1,2 +1,3 @@
-import { usersPictures } from './users-pictures.js';
-
+import './user-pictures.js';
+import './form-validation.js';
+import './user-modal.js';
