@@ -1,8 +1,8 @@
 import { data } from './data.js';
 
-const usersPictures = document.querySelector('.pictures');
+const userPictures = document.querySelector('.pictures');
 const userPictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
-const usersPicturesFragment = document.createDocumentFragment();
+const userPicturesFragment = document.createDocumentFragment();
 
 data.forEach(({ url, likes, description, comments }) => {
   const userPicture = userPictureTemplate.cloneNode(true);
@@ -10,9 +10,7 @@ data.forEach(({ url, likes, description, comments }) => {
   userPicture.querySelector('.picture__img').alt = description;
   userPicture.querySelector('.picture__likes').textContent = likes;
   userPicture.querySelector('.picture__comments').textContent = comments;
-  usersPicturesFragment.appendChild(userPicture);
+  userPicturesFragment.appendChild(userPicture);
 });
 
-usersPictures.appendChild(usersPicturesFragment);
-
-export { usersPictures };
+userPictures.appendChild(userPicturesFragment);
