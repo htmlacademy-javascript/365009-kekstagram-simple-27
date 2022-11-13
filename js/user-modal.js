@@ -36,25 +36,26 @@ uploadPictureButton.addEventListener('change', openUserModal);
 
 //Окно с ошибкой или удачной отправкой формы
 
-const showErrorModal = function () {
-  document.body.appendChild(errorModal);
-};
-
-const showSuccessModal = function () {
-  document.body.appendChild(successModal);
-};
-
 const hideErrorModal = function () {
   errorModal.remove();
 };
 
-errorButton.addEventListener('click', hideErrorModal);
-
-document.addEventListener('keydown', () => {
-  if(isEscapeKey || errorModal) {
+const onErrorEscKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
     hideErrorModal();
+    document.addEventListener('keydown', onModalEscKeydown);
+    document.removeEventListener('keydown', onErrorEscKeydown);
   }
-});
+};
+
+const showErrorModal = function () {
+  document.body.appendChild(errorModal);
+
+  editorCloseButton.addEventListener('click', closeUserModal);
+  document.removeEventListener('keydown', onModalEscKeydown);
+  document.addEventListener('keydown', onErrorEscKeydown);
+};
 
 const hideSuccessModal = function () {
   successModal.remove();
@@ -62,6 +63,24 @@ const hideSuccessModal = function () {
   closeUserModal();
 };
 
+const onSuccessEscKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    hideSuccessModal();
+    document.addEventListener('keydown', onModalEscKeydown);
+    document.removeEventListener('keydown', onSuccessEscKeydown);
+  }
+};
+
+const showSuccessModal = function () {
+  document.body.appendChild(successModal);
+
+  editorCloseButton.addEventListener('click', closeUserModal);
+  document.removeEventListener('keydown', onModalEscKeydown);
+  document.addEventListener('keydown', onSuccessEscKeydown);
+};
+
+errorButton.addEventListener('click', hideErrorModal);
 successButton.addEventListener('click', hideSuccessModal);
 
 export { userPictureForm, showErrorModal, showSuccessModal };
