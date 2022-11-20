@@ -73,35 +73,32 @@ noUiSlider.create(sliderElement, {
   step: effect.STEP,
 });
 
-filterReset();
+sliderElement.noUiSlider.on('update', () => {
+  valueElement.value = sliderElement.noUiSlider.get();
+  previewImage.style.filter = `${effect.FILTER}(${sliderElement.noUiSlider.get()}${effect.UNIT})`;
+});
 
 const addFilter = (evt) => {
   if (evt.target.classList.contains('effects__radio')) {
+    filterReset();
+
     effect = FilterEffects[evt.target.value];
 
-    filterReset();
-    if (typeof evt.target.value !== 'undefined') {
-      previewImage.classList.add(`effects__preview--${effect.NAME}`);
-      if (effect.NAME === 'none') {
-        sliderContainer.classList.add('hidden');
-      } else {
-        sliderContainer.classList.remove('hidden');
-      }
-
-      sliderElement.noUiSlider.on('update', () => {
-        valueElement.value = sliderElement.noUiSlider.get();
-        previewImage.style.filter = `${effect.FILTER}(${sliderElement.noUiSlider.get()}${effect.UNIT})`;
-      });
-
-      sliderElement.noUiSlider.updateOptions({
-        range: {
-          min: effect.MIN,
-          max: effect.MAX,
-        },
-        start: effect.START,
-        step: effect.STEP,
-      });
+    previewImage.classList.add(`effects__preview--${effect.NAME}`);
+    if (effect.NAME === 'none') {
+      sliderContainer.classList.add('hidden');
+    } else {
+      sliderContainer.classList.remove('hidden');
     }
+
+    sliderElement.noUiSlider.updateOptions({
+      range: {
+        min: effect.MIN,
+        max: effect.MAX,
+      },
+      start: effect.START,
+      step: effect.STEP,
+    });
   }
 };
 
