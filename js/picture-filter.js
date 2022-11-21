@@ -1,9 +1,5 @@
 import { previewImage, filterReset } from './picture-scale.js';
 
-const sliderContainer = document.querySelector('.img-upload__effect-level');
-const sliderElement = sliderContainer.querySelector('.effect-level__slider');
-const valueElement = sliderContainer.querySelector('.effect-level__value');
-
 const FilterEffects = {
   none: {
     NAME: 'none',
@@ -60,6 +56,10 @@ const FilterEffects = {
     UNIT: '',
   },
 };
+
+const sliderContainer = document.querySelector('.img-upload__effect-level');
+const sliderElement = sliderContainer.querySelector('.effect-level__slider');
+const valueElement = sliderContainer.querySelector('.effect-level__value');
 
 let effect = FilterEffects.none;
 

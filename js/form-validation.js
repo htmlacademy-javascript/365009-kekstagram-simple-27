@@ -1,5 +1,5 @@
-import { userPictureForm, showErrorModal, showSuccessModal } from './user-modal.js';
-import './user-modal.js';
+import { userPictureForm, showErrorModal, showSuccessModal, blockSubmitButton, unblockSubmitButton } from './user-modal.js';
+import { postData } from './api.js';
 
 const pristine = new Pristine(userPictureForm, {
   classTo: 'img-upload__text',
@@ -7,14 +7,27 @@ const pristine = new Pristine(userPictureForm, {
   errorTextClass: 'img-upload__error'
 });
 
-userPictureForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
+const setUserFormSubmit = () => {
+  userPictureForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
 
-  const isValid = pristine.validate();
+    const isValid = pristine.validate();
 
-  if(isValid) {
-    showSuccessModal();
-  } else {
-    showErrorModal();
-  }
-});
+    if(isValid) {
+      blockSubmitButton();
+      postData(
+        () => {
+          showSuccessModal();
+          unblockSubmitButton();
+        },
+        () => {
+          showErrorModal();
+          unblockSubmitButton();
+        },
+        new FormData(evt.target),
+      );
+    }
+  });
+};
+
+export { setUserFormSubmit };
