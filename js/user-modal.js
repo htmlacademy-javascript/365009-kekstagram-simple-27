@@ -2,8 +2,9 @@ import { isEscapeKey } from './util.js';
 
 const userPictureForm = document.querySelector('.img-upload__form');
 const uploadPictureButton = userPictureForm.querySelector('.img-upload__input');
-const pictureEditorModal = userPictureForm.querySelector('.img-upload__overlay');
+const pictureOverlayModal = userPictureForm.querySelector('.img-upload__overlay');
 const editorCloseButton = userPictureForm.querySelector('.img-upload__cancel');
+const submitButton = userPictureForm.querySelector('.img-upload__submit');
 
 const successModal = document.querySelector('#success').content.querySelector('.success');
 const successButton = successModal.querySelector('.success__button');
@@ -11,13 +12,14 @@ const errorModal = document.querySelector('#error').content.querySelector('.erro
 const errorButton = errorModal.querySelector('.error__button');
 
 function closeUserModal () {
-  pictureEditorModal.classList.add('hidden');
+  pictureOverlayModal.classList.add('hidden');
   document.body.classList.remove('modal-open');
   userPictureForm.reset();
   document.removeEventListener('keydown', onModalEscKeydown);
 }
 
 editorCloseButton.addEventListener('click', closeUserModal);
+
 
 function onModalEscKeydown (evt) {
   if (isEscapeKey(evt)) {
@@ -26,10 +28,17 @@ function onModalEscKeydown (evt) {
   }
 }
 
+function clickOutModal (evt) {
+  if (evt.target === pictureOverlayModal) {
+    closeUserModal();
+  }
+}
+
 function openUserModal () {
-  pictureEditorModal.classList.remove('hidden');
+  pictureOverlayModal.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onModalEscKeydown);
+  document.addEventListener('click', clickOutModal);
 }
 
 uploadPictureButton.addEventListener('change', openUserModal);
@@ -55,11 +64,12 @@ const showErrorModal = function () {
   editorCloseButton.addEventListener('click', closeUserModal);
   document.removeEventListener('keydown', onModalEscKeydown);
   document.addEventListener('keydown', onErrorEscKeydown);
+  errorModal.addEventListener('click', onAlertOutClick);
 };
 
 const hideSuccessModal = function () {
   successModal.remove();
-  userPictureForm.submit();
+  document.removeEventListener('click', clickOutModal);
   closeUserModal();
 };
 
@@ -78,9 +88,29 @@ const showSuccessModal = function () {
   editorCloseButton.addEventListener('click', closeUserModal);
   document.removeEventListener('keydown', onModalEscKeydown);
   document.addEventListener('keydown', onSuccessEscKeydown);
+  successModal.addEventListener('click', onAlertOutClick);
+};
+
+function onAlertOutClick(evt) {
+  if (evt.target === errorModal) {
+    hideErrorModal();
+  }
+  if (evt.target === successModal) {
+    hideSuccessModal();
+  }
+}
+
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = 'Отправка...';
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = 'Опубликовать';
 };
 
 errorButton.addEventListener('click', hideErrorModal);
 successButton.addEventListener('click', hideSuccessModal);
 
-export { userPictureForm, showErrorModal, showSuccessModal };
+export { userPictureForm, showErrorModal, showSuccessModal, blockSubmitButton, unblockSubmitButton };
