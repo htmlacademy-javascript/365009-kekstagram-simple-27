@@ -1,4 +1,4 @@
-import { previewImage, filterReset } from './picture-scale.js';
+import { previewImage, resetEffect } from './picture-scale.js';
 
 const FilterEffects = {
   none: {
@@ -78,9 +78,9 @@ sliderElement.noUiSlider.on('update', () => {
   previewImage.style.filter = `${effect.FILTER}(${sliderElement.noUiSlider.get()}${effect.UNIT})`;
 });
 
-const addFilter = (evt) => {
+const onPictureFilterApply = (evt) => {
   if (evt.target.classList.contains('effects__radio')) {
-    filterReset();
+    resetEffect();
 
     effect = FilterEffects[evt.target.value];
 
@@ -102,4 +102,4 @@ const addFilter = (evt) => {
   }
 };
 
-document.querySelector('.effects__list').addEventListener('click', addFilter);
+document.querySelector('.effects__list').addEventListener('click', onPictureFilterApply);

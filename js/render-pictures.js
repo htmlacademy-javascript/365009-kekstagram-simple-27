@@ -2,7 +2,6 @@ const userPictures = document.querySelector('.pictures');
 const userPictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const userPicturesFragment = document.createDocumentFragment();
 
-
 const renderPictures = (photos) => {
   photos.forEach(({ url, likes, description, comments }) => {
     const userPicture = userPictureTemplate.cloneNode(true);

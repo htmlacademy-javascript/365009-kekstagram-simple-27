@@ -7,7 +7,7 @@ const pristine = new Pristine(userPictureForm, {
   errorTextClass: 'img-upload__error'
 });
 
-const setUserFormSubmit = () => {
+const onUserFormSubmit = () => {
   userPictureForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
@@ -30,4 +30,4 @@ const setUserFormSubmit = () => {
   });
 };
 
-export { setUserFormSubmit };
+export { onUserFormSubmit };
