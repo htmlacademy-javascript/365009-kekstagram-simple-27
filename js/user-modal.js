@@ -1,4 +1,5 @@
 import { isEscapeKey } from './util.js';
+import { resetData } from './picture-scale.js';
 
 const userPictureForm = document.querySelector('.img-upload__form');
 const uploadPictureButton = userPictureForm.querySelector('.img-upload__input');
@@ -11,92 +12,89 @@ const successButton = successModal.querySelector('.success__button');
 const errorModal = document.querySelector('#error').content.querySelector('.error');
 const errorButton = errorModal.querySelector('.error__button');
 
-function closeUserModal () {
+const onUserModalClose = () => {
   pictureOverlayModal.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  userPictureForm.reset();
+  resetData();
   document.removeEventListener('keydown', onModalEscKeydown);
-}
+};
 
-editorCloseButton.addEventListener('click', closeUserModal);
-
+editorCloseButton.addEventListener('click', onUserModalClose);
 
 function onModalEscKeydown (evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    closeUserModal();
+    onUserModalClose();
   }
 }
 
-function clickOutModal (evt) {
+function onModalOutClick (evt) {
   if (evt.target === pictureOverlayModal) {
-    closeUserModal();
+    onUserModalClose();
   }
 }
 
-function openUserModal () {
+const onUserModalOpen = () => {
   pictureOverlayModal.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onModalEscKeydown);
-  document.addEventListener('click', clickOutModal);
-}
+  document.addEventListener('click', onModalOutClick);
+};
 
-uploadPictureButton.addEventListener('change', openUserModal);
+uploadPictureButton.addEventListener('change', onUserModalOpen);
 
-//Окно с ошибкой или удачной отправкой формы
-
-const hideErrorModal = function () {
+const onErrorModalHide = () => {
   errorModal.remove();
 };
 
 const onErrorEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    hideErrorModal();
+    onErrorModalHide();
     document.addEventListener('keydown', onModalEscKeydown);
     document.removeEventListener('keydown', onErrorEscKeydown);
   }
 };
 
-const showErrorModal = function () {
+const showErrorModal = () => {
   document.body.appendChild(errorModal);
 
-  editorCloseButton.addEventListener('click', closeUserModal);
+  editorCloseButton.addEventListener('click', onUserModalClose);
   document.removeEventListener('keydown', onModalEscKeydown);
   document.addEventListener('keydown', onErrorEscKeydown);
   errorModal.addEventListener('click', onAlertOutClick);
 };
 
-const hideSuccessModal = function () {
+const onSuccessModalHide = () => {
   successModal.remove();
-  document.removeEventListener('click', clickOutModal);
-  closeUserModal();
+  document.removeEventListener('click', onModalOutClick);
+  onUserModalClose();
 };
 
 const onSuccessEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    hideSuccessModal();
+    onSuccessModalHide();
     document.addEventListener('keydown', onModalEscKeydown);
     document.removeEventListener('keydown', onSuccessEscKeydown);
   }
 };
 
-const showSuccessModal = function () {
+const showSuccessModal = () => {
   document.body.appendChild(successModal);
 
-  editorCloseButton.addEventListener('click', closeUserModal);
+  editorCloseButton.addEventListener('click', onUserModalClose);
   document.removeEventListener('keydown', onModalEscKeydown);
   document.addEventListener('keydown', onSuccessEscKeydown);
   successModal.addEventListener('click', onAlertOutClick);
 };
 
-function onAlertOutClick(evt) {
+function onAlertOutClick (evt) {
   if (evt.target === errorModal) {
-    hideErrorModal();
+    onErrorModalHide();
   }
   if (evt.target === successModal) {
-    hideSuccessModal();
+    onSuccessModalHide();
   }
 }
 
@@ -110,7 +108,7 @@ const unblockSubmitButton = () => {
   submitButton.textContent = 'Опубликовать';
 };
 
-errorButton.addEventListener('click', hideErrorModal);
-successButton.addEventListener('click', hideSuccessModal);
-
+errorButton.addEventListener('click', onErrorModalHide);
+successButton.addEventListener('click', onSuccessModalHide);
+// -----------------Вопрос!!!---------------------Вопрос!!!---------------------------Вопрос!!!----------------
 export { userPictureForm, showErrorModal, showSuccessModal, blockSubmitButton, unblockSubmitButton };
