@@ -1,16 +1,18 @@
 import { showAlert } from './util.js';
 
+const URL = 'https://27.javascript.pages.academy/kekstagram-simple';
+
 const getData = (onSuccess) => {
-  fetch('https://27.javascript.pages.academy/kekstagram-simple/data')
+  fetch(`${URL}/data`)
     .then((response) => response.json())
     .then((photos) => {
       onSuccess(photos);
     })
-    .catch(showAlert);
+    .catch(() => showAlert(new Error('Не удалось загрузились фото, попробуйте ещё раз')));
 };
 
 const postData = (onSuccess, onFail, body) => {
-  fetch('https://27.javascript.pages.academy/kekstagram-simple',
+  fetch(URL,
     {
       method: 'POST',
       body
@@ -18,10 +20,9 @@ const postData = (onSuccess, onFail, body) => {
   )
     .then((response) => {
       if(response.ok) {
-        onSuccess();
-      } else {
-        throw new Error;
+        return onSuccess();
       }
+      throw new Error('Ошибка, попробуйте ещё раз');
     })
     .catch(onFail);
 };
