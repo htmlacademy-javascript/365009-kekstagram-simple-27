@@ -1,6 +1,6 @@
 const ALERT_SHOW_TIME = 5000;
 
-const showAlert = () => {
+const showAlert = (error) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = '100';
   alertContainer.style.position = 'absolute';
@@ -13,7 +13,7 @@ const showAlert = () => {
   alertContainer.style.textAlign = 'center';
   alertContainer.style.backgroundColor = 'gold';
 
-  alertContainer.textContent = 'message';
+  alertContainer.textContent = error.message;
 
   document.body.append(alertContainer);
 

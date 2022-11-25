@@ -20,8 +20,8 @@ const onUserFormSubmit = () => {
           showSuccessModal();
           unblockSubmitButton();
         },
-        () => {
-          showErrorModal();
+        (error) => {
+          showErrorModal(error.message);
           unblockSubmitButton();
         },
         new FormData(evt.target),

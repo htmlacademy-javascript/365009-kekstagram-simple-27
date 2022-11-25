@@ -1,7 +1,7 @@
 import { previewImage, resetEffect } from './picture-scale.js';
 
 const FilterEffects = {
-  none: {
+  None: {
     NAME: 'none',
     MIN: 0,
     MAX: 0,
@@ -10,7 +10,7 @@ const FilterEffects = {
     FILTER: '',
     UNIT: '',
   },
-  chrome: {
+  Chrome: {
     NAME: 'chrome',
     MIN: 0,
     MAX: 1,
@@ -19,7 +19,7 @@ const FilterEffects = {
     FILTER: 'grayscale',
     UNIT: '',
   },
-  sepia: {
+  Sepia: {
     NAME: 'sepia',
     MIN: 0,
     MAX: 1,
@@ -28,7 +28,7 @@ const FilterEffects = {
     FILTER: 'sepia',
     UNIT: '',
   },
-  marvin: {
+  Marvin: {
     NAME: 'marvin',
     MIN: 0,
     MAX: 100,
@@ -37,7 +37,7 @@ const FilterEffects = {
     FILTER: 'invert',
     UNIT: '%',
   },
-  phobos: {
+  Phobos: {
     NAME: 'phobos',
     MIN: 0,
     MAX: 3,
@@ -46,7 +46,7 @@ const FilterEffects = {
     FILTER: 'blur',
     UNIT: 'px',
   },
-  heat: {
+  Heat: {
     NAME: 'heat',
     MIN: 1,
     MAX: 3,
@@ -61,7 +61,7 @@ const sliderContainer = document.querySelector('.img-upload__effect-level');
 const sliderElement = sliderContainer.querySelector('.effect-level__slider');
 const valueElement = sliderContainer.querySelector('.effect-level__value');
 
-let effect = FilterEffects.none;
+let effect = FilterEffects.None;
 
 noUiSlider.create(sliderElement, {
   connect: 'lower',
@@ -81,8 +81,9 @@ sliderElement.noUiSlider.on('update', () => {
 const onPictureFilterApply = (evt) => {
   if (evt.target.classList.contains('effects__radio')) {
     resetEffect();
-
-    effect = FilterEffects[evt.target.value];
+    const v = evt.target.value;
+    const key = v.at(0).toLocaleUpperCase() + v.slice(1).toLocaleLowerCase();
+    effect = FilterEffects[key];
 
     previewImage.classList.add(`effects__preview--${effect.NAME}`);
     if (effect.NAME === 'none') {
